@@ -44,7 +44,7 @@ router.post('/studentLogin', async (req, res) => {
                 name: admin.name
             }
         });
-
+ 
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ message: 'Server error' });

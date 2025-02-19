@@ -27,6 +27,15 @@ app.use(express.json());
 
 app.use(cors());
 
+app.use(cors({
+    origin: ' http://localhost:3000',
+    // origin: "https://banking-application-roan.vercel.app",
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true, // Allow credentials (cookies)
+
+}));
+
+
 
 
 app.use(bodyParser.json());
