@@ -10,7 +10,7 @@ const router = express.Router();
  
 router.get('/students',  async (req, res) => {
     try {
-        const GetStudents = await studentSchema.find({});
+        const GetStudents = await Student.find({});
         console.log("These are your students:", GetStudents);
         console.log(req.userClass); // Access user's class
         console.log(req.userRole);
