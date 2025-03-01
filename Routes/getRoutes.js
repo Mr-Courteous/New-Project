@@ -7,21 +7,23 @@ const { specialAuthMiddleware, specialAuthMiddlewareForAdmins, authMiddleware } 
 const router = express.Router();
 
 
- 
-router.get('/students',  async (req, res) => {
+router.get('/students', async (req, res) => {
     try {
-        const GetStudents = await Student.find({});
+        const GetStudents = await Student.find({}, 'name class'); // Select only 'name' and 'class' fields
         console.log("These are your students:", GetStudents);
         console.log(req.userClass); // Access user's class
         console.log(req.userRole);
         res.status(200).json({ GetStudents })
     } catch (error) {
         console.error('error getting your students', error)
-        res.status(500).json({ success: false, message: "error getting your students' data", error: error.message })
+        res.status(500).json({
+            success: false,
+            message: "error getting your students' data",
+            error: error.message
+        })
     }
+})
 
-
-}) 
 
 
 router.get('/students/class/:class', async (req, res) => {
