@@ -29,7 +29,7 @@ router.get('/students', async (req, res) => {
 router.get('/students/class/:class', async (req, res) => {
     try {
         const { class: studentClass } = req.params;
-        const students = await SchemaStudent.find({ class: studentClass });
+        const students = await Student.find({ class: studentClass });
         res.json(students);
     } catch (error) {
         console.error('Error fetching students by class:', error);
@@ -54,7 +54,7 @@ router.get('/students/search', async (req, res) => {
             query.class = studentClass;
         }
 
-        const students = await SchemaStudent.find(query);
+        const students = await Student.find(query);
         res.json(students);
     } catch (error) {
         console.error('Error searching students:', error);
@@ -100,7 +100,7 @@ router.get('/getAdmins', async (req, res) => {
 router.get('/students/:id', async (req, res) => {
     const id = req.params.id;
     try {
-        const data = await SchemaStudent.findById(id);
+        const data = await Student.findById(id);
         if (!data) {
             return res.status(404).json({ message: 'Data not found' });
         }
