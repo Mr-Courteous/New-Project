@@ -35,7 +35,7 @@ router.get('/students/class/:class', async (req, res) => {
         console.error('Error fetching students by class:', error);
         res.status(500).json({
             success: false,
-            message: "error getting your students' data",
+            message: error.message,
             error: error.message
         })
     }
