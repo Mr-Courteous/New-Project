@@ -33,7 +33,11 @@ router.get('/students/class/:class', async (req, res) => {
         res.json(students);
     } catch (error) {
         console.error('Error fetching students by class:', error);
-        res.status(500).json({ error: 'Failed to fetch students' });
+        res.status(500).json({
+            success: false,
+            message: "error getting your students' data",
+            error: error.message
+        })
     }
 });
 
@@ -54,7 +58,11 @@ router.get('/students/search', async (req, res) => {
         res.json(students);
     } catch (error) {
         console.error('Error searching students:', error);
-        res.status(500).json({ error: 'Failed to search students' });
+        res.status(500).json({
+            success: false,
+            message: "error getting your students' data",
+            error: error.message
+        })
     }
 });
 
