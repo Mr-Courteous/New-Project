@@ -4,6 +4,7 @@ const Teacher = require('../Models/TeacherSchema');
 const Student = require("../Models/studentSchema")
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Counter = require('../models/Counter'); // Import your Counter model
 require('dotenv').config();
 const { specialAuthMiddleware, specialAuthMiddlewareForAdmins, authMiddleware } = require('../protection')
 
@@ -45,42 +46,59 @@ router.post('/adminLogin', async (req, res) => {
 
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
 
+
+// Function to generate the unique ID
+async function generateRegistrationNumber(schoolName, className) {
+    const counterId = `${schoolName}-${className}`; // Unique counter ID
+
+    // Ensure the counter exists
+    const counter = await Counter.findOneAndUpdate(
+        { _id: counterId },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+    );
+
+    const seqNumber = counter.seq.toString().padStart(3, '0'); // Pad with leading zeros
+
+    return `${schoolName}/${className}/${seqNumber}`;
+}
+
 router.post('/addStudent', async (req, res) => {
     try {
-        // Destructure and sanitize user data (optional)
-        const { name, class: studentClass, dateOfBirth, phoneNumber, email, address, password } = req.body;
+        const { name, class: studentClass, dateOfBirth, phoneNumber, email, address, password, schoolName } = req.body;
 
         const existingUser = await Student.findOne({ email });
         if (existingUser) {
-
-            return res.status(400).json({ message: "This email has been registered. Try registerning with a new  email" });
+            return res.status(400).json({ message: "This email has been registered. Try registering with a new email" });
         }
+
         const saltRounds = 10;
         const hashedPassword = await bcryptjs.hash(password, saltRounds);
 
-        // Create a new student object
+        const registrationNumber = await generateRegistrationNumber(schoolName, studentClass);
+
         const newStudent = new Student({
             name,
             class: studentClass,
             phoneNumber,
             email,
             address,
-            password:hashedPassword,
+            password: hashedPassword,
             dateOfBirth,
+            registrationNumber: registrationNumber, // Use the generated ID
         });
 
-        // Save the student data to the database
         await newStudent.save();
 
         console.log('Student registered successfully:', newStudent);
-        res.status(200).json({ success: true, message: 'Student registered successfully' });
+        res.status(200).json({ success: true, message: 'Student registered successfully', student: newStudent });
     } catch (error) {
         console.error('Error registering student:', error);
-        res.status(500).json({ success: false, message: 'Error registering student' });
+        res.status(500).json({ success: false, message: 'Error registering student', error: error.message });
     }
 });
 

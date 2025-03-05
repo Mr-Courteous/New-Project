@@ -42,7 +42,7 @@ const studentSchema = new mongoose.Schema({
   // profilePicture: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
   password:{type: String, required : true},
-
+  registrationNumber: { type: String, unique: true }, // Add this field
   scores: {
     type: Object,
     default: {
