@@ -40,7 +40,7 @@ const allowedOrigins = [
   'http://localhost:3001',      // Another local dev server
   'https://your-production-domain.com', // Production frontend 1
   'https://another-frontend.com', // Production frontend 2
-  'myapp://', // For mobile apps (if applicable)
+  'myapp://', // For mobile apps (if applicable) 
 ];
 
 app.use(
