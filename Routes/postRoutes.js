@@ -53,7 +53,10 @@ router.post('/adminLogin', async (req, res) => {
 
 // Function to generate the unique ID
 async function generateRegistrationNumber(schoolName, className) {
-    const counterId = `${schoolName}-${className}`; // Unique counter ID
+
+    const schoolNamee = "ABC"; // Fixed school name
+
+    const counterId = `${schoolNamee}-${className}`; // Unique counter ID
 
     // Ensure the counter exists
     const counter = await Counter.findOneAndUpdate(
@@ -64,7 +67,7 @@ async function generateRegistrationNumber(schoolName, className) {
 
     const seqNumber = counter.seq.toString().padStart(3, '0'); // Pad with leading zeros
 
-    return `${schoolName}/${className}/${seqNumber}`;
+    return `${schoolNamee}/${className}/${seqNumber}`;
 }
 
 router.post('/addStudent', async (req, res) => {
