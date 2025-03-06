@@ -12,6 +12,7 @@ import StudentProfile from "./Routes/StudentsProfilePage";
 import StudentList from "./Routes/StudentsList";
 import SpecificStudent from "./Routes/SearchForSpecificStudent";
 import UpdateStudentScore from "./Routes/UpdateStudentScore";
+import SearchByRegistrationNumber from './Routes/SearchByReg';
 
 
 
@@ -34,6 +35,8 @@ function App() {
           <Route path="/studentsList" element={<StudentList />} />
           <Route path="/specificStudent" element={<SpecificStudent />} />
           <Route path="/updateStudentScore" element={<UpdateStudentScore />} />
+          <Route path="/specificStudentByReg" element = {<SearchByRegistrationNumber /> }/>
+
 
 
 

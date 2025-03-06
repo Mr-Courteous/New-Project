@@ -67,6 +67,56 @@ router.get('/students/search', async (req, res) => {
 });
 
 
+router.get('/studentsbyreg/search', async (req, res) => {
+    try {
+        const { class: studentClass, registrationNumber } = req.query;
+        let query = {};
+
+        if (studentClass) {
+            query.class = studentClass;
+        }
+
+        if (registrationNumber) {
+            query.registrationNumber = { $regex: new RegExp(registrationNumber, 'i') }; // Case-insensitive search
+        }
+
+        const students = await Student.find(query);
+        res.json(students);
+    } catch (error) {
+        console.error('Error searching students:', error);
+        res.status(500).json({
+            success: false,
+            message: "error getting your students' data",
+            error: error.message
+        });
+    }
+});
+
+
+// router.get('/students/search', async (req, res) => {
+//     try {
+//         const { registrationNumber } = req.query;
+
+//         if (!registrationNumber) {
+//             return res.status(400).json({ message: "Registration number is required" });
+//         }
+
+//         const student = await Student.findOne({ registrationNumber: { $regex: new RegExp(`^${registrationNumber}$`, 'i') } });
+
+//         if (!student) {
+//             return res.status(404).json({ message: "Student not found" });
+//         }
+
+//         res.json([student]); // Return as an array for consistency
+//     } catch (error) {
+//         console.error('Error searching student:', error);
+//         res.status(500).json({
+//             success: false,
+//             message: "Error getting student data",
+//             error: error.message
+//         });
+//     }
+// });
 router.get('/getTeachers', async (req, res) => {
     try {
         const allTecahers = await Teacher.find({});
