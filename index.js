@@ -37,6 +37,7 @@ app.use(cors());
 
 const allowedOrigins = [
   'http://localhost:3000',      // Local development
+  'http://localhost:5173',
   'http://localhost:3001',      // Another local dev server
   'https://your-production-domain.com', // Production frontend 1
   'https://another-frontend.com', // Production frontend 2

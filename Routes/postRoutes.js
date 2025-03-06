@@ -89,6 +89,8 @@ router.post('/addStudent', async (req, res) => {
             address,
             password: hashedPassword,
             dateOfBirth,
+            schoolName: "MySchool",
+
             registrationNumber: registrationNumber, // Use the generated ID
         });
 
