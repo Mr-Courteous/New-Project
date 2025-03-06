@@ -4,7 +4,7 @@ const Teacher = require('../Models/TeacherSchema');
 const Student = require("../Models/studentSchema")
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Counter = require('../models/CounterSchema'); // Import your Counter model
+const Counter = require('../Models/CounterSchema'); // Import your Counter model
 require('dotenv').config();
 const { specialAuthMiddleware, specialAuthMiddlewareForAdmins, authMiddleware } = require('../protection')
 
